@@ -1,6 +1,14 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
+from app.create_table import create_db_and_tables
 
-app = FastAPI(title="Focus Me API")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    create_db_and_tables()
+    yield
+
+
+app = FastAPI(title="Focus Me API", lifespan=lifespan)
 
 
 @app.get("/health")
