@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-
+from app.models import User, FocusSession
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from sqlmodel import Field, Session, SQLModel, create_engine, select
@@ -9,11 +9,6 @@ from sqlmodel import Field, Session, SQLModel, create_engine, select
 load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 
 
-class Hero(SQLModel, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    name: str = Field(index=True)
-    secret_name: str
-    age: int | None = Field(default=None, index=True)
 
 
 # The database URL is automatically injected as an environment variable
