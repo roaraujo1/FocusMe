@@ -1,15 +1,19 @@
-from sqlmodel import Field, SQLModel, create_engine
+from sqlmodel import Field, SQLModel
+from datetime import date
 
-
-class User(SQLModel, table=True):
+class Users(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     username: str
     password: str
-    age: int | None = None
+
+class User_Create(SQLModel):
+    username:str
+    password:str
+    
 
 class FocusSession(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     user_id: int
-    date: str
+    session_date: date
     time: int
 

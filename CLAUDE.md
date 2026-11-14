@@ -44,3 +44,4 @@ Adaptive focus timer app. See README for architecture and roadmap.
 - Don't write the database models or the session endpoints. I'm writing those myself.
 - Ask before adding new libraries or changing the project structure.
 - User identity always comes from the login token, never the request body.
+- Never read, print, or display the contents of .env or any secrets.
