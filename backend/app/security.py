@@ -42,11 +42,13 @@ def get_current_user(token: Annotated[str, Depends(oauth2_scheme)],session: Anno
     )
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+
         user_id = payload.get("sub")
         if user_id is None:
             raise credentials_exception
         token_data = TokenData(user_id = int(user_id))
-    except InvalidTokenError:
+    except InvalidTokenError :
+       
         raise credentials_exception
     
     user = session.get(Users,token_data.user_id)

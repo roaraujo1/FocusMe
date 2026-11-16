@@ -9,7 +9,11 @@ class Users(SQLModel, table=True):
 class User_Create(SQLModel):
     username:str
     password:str
-    
+
+
+class Focus_Session_Create(SQLModel):
+    session_date: date
+    time: int 
 
 class FocusSession(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)

@@ -7,7 +7,7 @@ from sqlmodel import Session
 from backend.app.database import create_db_and_tables,get_session
 from fastapi.security import OAuth2PasswordBearer,OAuth2PasswordRequestForm
 from backend.app import auth, security
-from backend.app.models import User_Create
+from backend.app.models import User_Create, Users, FocusSession, Focus_Session_Create
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -34,7 +34,7 @@ def login_for_access_token(
         )
     access_token_expires = timedelta(minutes=security.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = security.create_access_token(
-        data={str(user.id): user.username}, expires_delta=access_token_expires
+        data={"sub":str(user.id)}, expires_delta=access_token_expires
     )
     return security.Token(access_token=access_token, token_type="bearer")
 
@@ -49,7 +49,13 @@ def create_user(user:User_Create,session: Annotated[Session,Depends(get_session)
         )
     return {"user":"user was created"}
 
-
+@app.post("/focus-sessions", status_code=201)
+def save_session(data: Focus_Session_Create, session: Annotated[Session,Depends(get_session)],current_user: Annotated[Users,Depends(security.get_current_user)])->FocusSession:
+    newFocusSession = FocusSession(user_id=current_user.id, session_date=data.session_date,time=data.time)
+    session.add(newFocusSession)
+    session.commit()
+    session.refresh(newFocusSession)
+    return newFocusSession
 
 
 
