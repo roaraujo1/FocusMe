@@ -2,6 +2,8 @@
 
 A learning app with an adaptive focus timer. It uses eye tracking to find your best focus and break intervals, and an LLM to build engaging learning paths. Prototype: learning Persian.
 
+https://focusme-backend-145516397891.us-west1.run.app
+
 ## Architecture (Phase 1)
 
 ```mermaid
