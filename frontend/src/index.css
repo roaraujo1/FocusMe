@@ -1,0 +1,36 @@
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+}
+
+main {
+  max-width: 360px;
+  margin: 64px auto;
+  padding: 0 16px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+input,
+button {
+  font: inherit;
+  padding: 8px;
+}
+
+.error {
+  color: #b00020;
+}
+
+.success {
+  color: #1b7a3a;
+}

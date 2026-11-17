@@ -57,7 +57,7 @@ def create_user(user:User_Create,session: Annotated[Session,Depends(get_session)
     user_auth = auth.UserAuth(session)
     res = user_auth.add_user(user.username,user.password)
     if not res:
-        return HTTPException(
+        raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail = "Username exists"
         )
