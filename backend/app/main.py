@@ -3,7 +3,7 @@ from datetime import timedelta
 from fastapi import Depends,FastAPI, HTTPException, status
 from typing import Annotated
 
-from sqlmodel import Session
+from sqlmodel import Session, select
 from backend.app.database import create_db_and_tables,get_session
 from fastapi.security import OAuth2PasswordBearer,OAuth2PasswordRequestForm
 from backend.app import auth, security
@@ -57,6 +57,11 @@ def save_session(data: Focus_Session_Create, session: Annotated[Session,Depends(
     session.refresh(newFocusSession)
     return newFocusSession
 
+@app.get("/focus-sessions")
+def get_focus_sessions_by_user(session:Annotated[Session,Depends(get_session)],current_user: Annotated[Users,Depends(security.get_current_user)])->list:
+    query = select(FocusSession).where(FocusSession.user_id == current_user.id)
+    res = session.exec(query)
+    return res.all()
 
 
 @app.get("/health")
