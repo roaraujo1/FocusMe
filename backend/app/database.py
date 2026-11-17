@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-from backend.app.models import Users, FocusSession
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from sqlmodel import Field, Session, SQLModel, create_engine, select

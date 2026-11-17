@@ -14,15 +14,12 @@ def check_pwd(password:str, hashed:str)->bool:
 
 class UserAuth:
     def __init__(self,session):
-        self.login_attempts = {}
-        self.max_attempts = 3
-        self.lockout_minutes = 15
         self.session = session 
     
     def check_if_user_exists(self,username:str)->bool:
-        query = select(Users).where(Users.username == username)
-        res = self.session.exec(query)
-        return res.first() is not None
+        if self.get_user_by_username(username):
+            return True
+        return False
         
         
     def get_user_by_username(self,username:str)-> Users | None:
