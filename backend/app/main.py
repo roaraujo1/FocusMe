@@ -2,7 +2,7 @@ from contextlib import asynccontextmanager
 from datetime import timedelta
 from fastapi import Depends,FastAPI, HTTPException, status
 from typing import Annotated
-
+from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import Session, select
 from backend.app.database import create_db_and_tables,get_session
 from fastapi.security import OAuth2PasswordBearer,OAuth2PasswordRequestForm
@@ -16,6 +16,18 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="Focus Me API", lifespan=lifespan)
+origins = [
+    "http://localhost:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 @app.post("/token")
