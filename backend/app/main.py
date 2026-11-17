@@ -58,7 +58,7 @@ def save_session(data: Focus_Session_Create, session: Annotated[Session,Depends(
     return newFocusSession
 
 @app.get("/focus-sessions")
-def get_focus_sessions_by_user(session:Annotated[Session,Depends(get_session)],current_user: Annotated[Users,Depends(security.get_current_user)])->list:
+def get_focus_sessions_by_user(session:Annotated[Session,Depends(get_session)],current_user: Annotated[Users,Depends(security.get_current_user)])->list[FocusSession]:
     query = select(FocusSession).where(FocusSession.user_id == current_user.id)
     res = session.exec(query)
     return res.all()
