@@ -34,3 +34,13 @@ button {
 .success {
   color: #1b7a3a;
 }
+
+.elapsed {
+  font-size: 3rem;
+  font-variant-numeric: tabular-nums; /* digits keep the same width as they change */
+  margin: 16px 0;
+}
+
+section {
+  margin-bottom: 32px;
+}

@@ -8,6 +8,8 @@ export default function LoginPage() {
   const location = useLocation()
   // SignupPage passes { signedUp: true } when it sends the user here.
   const justSignedUp = location.state?.signedUp === true
+  // Timer passes { sessionExpired: true } when the backend rejected the token.
+  const sessionExpired = location.state?.sessionExpired === true
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -33,6 +35,7 @@ export default function LoginPage() {
     <main>
       <h1>Log in</h1>
       {justSignedUp && <p className="success">Account created. Please log in.</p>}
+      {sessionExpired && <p className="error">Your login expired. Please log in again.</p>}
       <form onSubmit={handleSubmit}>
         <label>
           Username

@@ -72,3 +72,25 @@ export function authFetch(path: string, options: RequestInit = {}): Promise<Resp
   if (token) headers.set('Authorization', `Bearer ${token}`)
   return request(path, { ...options, headers })
 }
+
+// Thrown when the backend rejects the token (missing, expired or invalid),
+// so the page can tell "log in again" apart from other failures.
+export class UnauthorizedError extends Error {}
+
+// POST /focus-sessions expects JSON: { session_date: "YYYY-MM-DD", time: <int> }.
+// `time` is the session length in whole seconds.
+// We never send a user id: the backend takes it from the token.
+export async function saveFocusSession(sessionDate: string, seconds: number): Promise<void> {
+  const res = await authFetch('/focus-sessions', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ session_date: sessionDate, time: seconds }),
+  })
+
+  if (res.status === 401) {
+    throw new UnauthorizedError('Your login has expired. Please log in again.')
+  }
+  if (!res.ok) {
+    throw new Error(await readError(res, 'Could not save the session. Please try again.'))
+  }
+}
