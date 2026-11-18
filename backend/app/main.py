@@ -20,6 +20,7 @@ app = FastAPI(title="Focus Me API", lifespan=lifespan)
 
 origins = [
     "http://localhost:5173",
+    "https://focus-me-delta.vercel.app/login",
 ]
 
 app.add_middleware(
