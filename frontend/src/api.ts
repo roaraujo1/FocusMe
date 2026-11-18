@@ -94,3 +94,26 @@ export async function saveFocusSession(sessionDate: string, seconds: number): Pr
     throw new Error(await readError(res, 'Could not save the session. Please try again.'))
   }
 }
+
+// One row from GET /focus-sessions.
+// session_date is a plain "YYYY-MM-DD" string (no time of day, no time zone).
+// time is the length in seconds.
+export type FocusSession = {
+  id: number
+  user_id: number
+  session_date: string
+  time: number
+}
+
+// GET /focus-sessions returns all of the logged-in user's sessions.
+export async function getFocusSessions(): Promise<FocusSession[]> {
+  const res = await authFetch('/focus-sessions')
+
+  if (res.status === 401) {
+    throw new UnauthorizedError('Your login has expired. Please log in again.')
+  }
+  if (!res.ok) {
+    throw new Error(await readError(res, 'Could not load your sessions. Please try again.'))
+  }
+  return res.json()
+}

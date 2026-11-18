@@ -44,3 +44,52 @@ button {
 section {
   margin-bottom: 32px;
 }
+
+/* Calendar page needs more room than the login forms. */
+main.wide {
+  max-width: 560px;
+}
+
+.month-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.month-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.weekday {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-height: 56px;
+  padding: 4px 2px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+}
+
+.day.today {
+  border-color: #333;
+}
+
+.day.selected {
+  background: #e8f0fe;
+}
+
+.day-total {
+  font-size: 0.7rem;
+  color: #1b7a3a;
+}

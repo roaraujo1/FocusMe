@@ -1,4 +1,4 @@
-// Small date/time helpers for the timer.
+// Small date/time helpers for the timer and the calendar.
 
 // 3725000 ms → "01:02:05"
 export function formatElapsed(ms: number): string {
@@ -16,4 +16,13 @@ export function toLocalDateString(d: Date): string {
   const m = String(d.getMonth() + 1).padStart(2, '0')
   const day = String(d.getDate()).padStart(2, '0')
   return `${y}-${m}-${day}`
+}
+
+// 3900 → "1h 05m", 1500 → "25m", 40 → "40s"
+export function formatDuration(seconds: number): string {
+  const h = Math.floor(seconds / 3600)
+  const m = Math.floor((seconds % 3600) / 60)
+  if (h > 0) return `${h}h ${String(m).padStart(2, '0')}m`
+  if (m > 0) return `${m}m`
+  return `${seconds}s`
 }
